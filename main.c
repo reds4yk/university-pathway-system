@@ -1,7 +1,49 @@
-#include <stdio.h>
-#include "etudiant.h"
-#include "cours.h"
-#include "inscription.h"
+#include "data_structures.c"
+#include "course_management.c"
+#include "student_management.c"
+
+void inscrireCours() {
+    char idEtudiant[ID_ETUDIANT_LONGUEUR + 1];
+    int idCours;
+
+    printf("Entrez l'ID de l'étudiant : ");
+    scanf("%s", idEtudiant);
+
+    printf("Entrez l'ID du cours : ");
+    scanf("%d", &idCours);
+
+    Etudiant *etudiant = NULL;
+    for (int i = 0; i < nbEtudiants; i++) {
+        if (strcmp(etudiants[i].id, idEtudiant) == 0) {
+            etudiant = &etudiants[i];
+            break;
+        }
+    }
+
+    if (etudiant == NULL) {
+        printf("Étudiant non trouvé.\n");
+        return;
+    }
+
+    Cours *cours = NULL;
+    for (int i = 0; i < nbCours; i++) {
+        if (coursOfferts[i].id == idCours) {
+            cours = &coursOfferts[i];
+            break;
+        }
+    }
+
+    if (cours == NULL) {
+        printf("Cours non trouvé.\n");
+        return;
+    }
+
+    Cours *nouveauCours = creerCours(cours->id, cours->nom, cours->credits);
+    nouveauCours->suivant = etudiant->historiqueCours;
+    etudiant->historiqueCours = nouveauCours;
+
+    printf("L'étudiant %s %s a été inscrit au cours %s.\n", etudiant->prenom, etudiant->nom, cours->nom);
+}
 
 int main() {
     int choix;
