@@ -26,9 +26,8 @@ void ajouterCours() {
 
     printf("Cours ajouté avec succès.\n");
 }
-로미사
+
 course_management.c
-로미사
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
